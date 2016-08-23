@@ -1,15 +1,145 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Visualize linked list</title>
+<style>
+button {
+	background-color:yellow;
+}
+
+</style>
 
 </head>
 <body>
 
-<script>
-var data = 
+<h1 align="center">Input your integer linked list item</h1>
+<button id="start" onclick="inputFunction()">Click me</button>
 
-</scipt>
-</doby>
+<div id="dispalyDiv"></div>
+
+
+<script>
+function inputFunction() {
+	var input = prompt("Please input the linkedlist value, seperated by comma.");
+	var singlelist = new SinglyList();
+	
+	if(input != null) {
+		if(!isValidLinkedList(input)) {
+			window.alert("Not valid linked list");
+			return;
+		}
+		
+		var list = input.split(',');
+		var div = document.getElementById("dispalyDiv");
+		
+		for (var i = 0; i < list.length; i++) {
+			singlelist.add(list[i]);
+			var node = drawNode(list[i]);
+			var node1 = drawNode("->");
+			div.appendChild(node);
+			div.appendChild(node1);
+		}
+		
+		if (!singlelist.hasCycle()) {
+			var node = drawNode("null");
+			div.appendChild(node);
+			
+			node = drawNode("No cycle linked list: ");
+			div.insertBefore(node, div.firstChild);
+		} else {
+			
+		}
+	}
+}
+
+function drawNode(value) {
+	var node = document.createElement("span");
+	var nodeValue = document.createTextNode(value);
+	node.appendChild(nodeValue);
+	return node;
+}
+
+function isValidLinkedList(input){
+	var list = input.split(',');
+	
+	var map = new Map();
+	var count = 0;
+	
+	for (var i = 0; i < list.length; i++) {
+		if(isNaN(list[i])) {
+			return false;
+		}
+		
+		if (map.get(list[i]) == undefined) {
+			map.set(list[i], 1);
+		} else {
+			count++;
+		}
+		
+		if (count >= 2) {
+			return false;
+		}
+	}
+	
+	return true;
+}
+
+function Node(data) {
+	this.data = data;
+	this.next = null;
+}
+
+function SinglyList() {
+	this.length = 0;
+	this.head = null;
+	this.add = function(value) {
+	var node = new Node(value),
+		currentNode = this.head;
+	
+		if (!currentNode) {
+			this.head = node;
+			this.length++;
+			return;
+		}
+	
+		while (currentNode) {
+			currentNode = currentNode.next;
+		}
+	
+		currentNode = this.head;
+		this.length++;
+		return;
+	}
+	
+	this.hasCycle = function(){
+		var slow = this.head;
+		var fast = this.head.next;
+		
+		while (slow != fast) {
+			if (fast != null && fast.next != null && fast.next.next != null) {
+				slow = slow.next;
+				fast = fast.next.next;
+			} else {
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	this.findCycle = function() {
+		var slow = this.head;
+		var fast = this.head.next;
+		
+		while (slow != fast) {
+			slow = slow.next;
+			fast = fast.next.next;
+		}
+		
+		return slow;
+	}
+}
+
+</script>
+</body>
 
 </html>
