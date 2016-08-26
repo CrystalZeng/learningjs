@@ -2,32 +2,28 @@
 <html>
 <head>
 <style>
-article {
+.a {
 border:1px solid green;
-box-sizing:border-box;
+
 margin-right:5%;
 margin-top:5%;
 display:inline-block;
 }
-
-div {
+.container {
 border:1px solid red;
 width: 900px;
 }
-
 body {
-width: 600px;
+box-sizing:border-box;
 }
-
 </style>
 </head>
 <body>
-<div>
+<div class="container">
 
-<article style="height:200px; width:200px;  ">Anonymous Boxes?</article>
-<article style="height:200px; width:100px; ">
-</article>
-<article style="height:200px; width:33.33333%; "></article>
+<div class="a" style="height:200px; width:200px;  ">Anonymous Boxes?</div>
+<div class="a" style="height:200px; width:100px; float:right;  border-color:blue"></div>
+<div class="a" style="height:200px; width:33.33333%; "></div>
 <div>
 </body>
 
