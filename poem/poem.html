@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poem</title>
+</head>
+<style>
+    .poem_container {
+        background-color: greenyellow;
+        color: red;
+    }
+
+</style>
+
+<body>
+
+<div class="poem_container">
+    <h3 class="poem_title">望蓟门</h3>
+    <p class="poem_content">
+        燕台一去客心惊，笳鼓喧喧汉将营。万里寒光生积雪，三边曙色动危旌。
+        沙场烽火侵胡月，海畔云山拥蓟城。少小虽非投笔吏，论功还欲请长缨。
+    </p>
+</div>
+
+<div class="poem_container">
+    <h3 class="poem_title">望庐山瀑布</h3>
+    <p class="poem_content">
+        日照香炉生紫烟，遥看瀑布挂前川。飞流直下三千尺，疑是银河落九天。
+    </p>
+</div>
+
+<button onclick="createPoemElement()">Add</button>
+<div id="auto"></div>
+
+<script>
+
+
+    var poems = document.getElementsByClassName("poem_content");
+
+    //    for (var i = 0; i < poems.length; i++) {
+    //        poems[i].addEventListener("click", function () {
+    //            controlFunction(poems[i], i)
+    //        }, false);
+    //    }
+
+    poems[0].addEventListener("click", function () {
+        controlFunction(poems[0], 0)
+    }, false);
+    poems[1].addEventListener("click", function () {
+        controlFunction(poems[1], 1)
+    }, false);
+
+    var prev = undefined;
+    function controlFunction(p, index) {
+        if (p.childNodes[1]) {
+            p.removeChild(p.childNodes[1])
+        } else {
+            if (prev != undefined && prev != p) {
+                if (prev.childNodes[1]) {
+                    prev.removeChild(prev.childNodes[1]);
+                }
+            }
+            var em = document.createElement("embed");
+            var mp3 = "mp3/p" + index + ".mp3";
+            em.setAttribute("src", mp3);
+            em.setAttribute("autostart", "true");
+//            em.setAttribute("hidden", "true");
+            p.appendChild(em);
+            prev = p;
+        }
+    }
+
+
+    var origin_poems = [{'title': '望庐山瀑布', 'author': 'Author', 'content': '日照香炉生紫烟，遥看瀑布挂前川。飞流直下三千尺，疑是银河落九天。'},
+        {'title': '望蓟门', 'author': 'Author', 'content': '燕台一去客心惊，笳鼓喧喧汉将营。万里寒光生积雪，三边曙色动危旌。'},
+    ]
+
+    function createPoemElement() {
+        for (var i = 0; i < origin_poems.length; i++) {
+            var poem_container = document.createElement("div");
+            poem_container.setAttribute("class", "poem_container");
+
+            var poem_header = document.createElement("h2");
+            poem_header.setAttribute("class", "poem_header");
+            poem_header.innerHTML = origin_poems[i].title;
+            poem_container.appendChild(poem_header);
+
+            var poem_content = document.createElement("p");
+            poem_content.addEventListener("click", controlFunction(poem_content, i));
+            poem_content.setAttribute("class", "poem_content");
+            poem_content.innerHTML = origin_poems[i].content;
+            poem_container.appendChild(poem_content);
+
+            document.getElementById('auto').appendChild(poem_container);
+
+//            poem_content.addEventListener('click', function (p, num) {
+//                controlFunction(p, num)
+//            }(poem_content, i), false);
+
+            poem_content.onclick = function(p, num) {
+                controlFunction(p, num);
+            }(poem_content, i);
+        }
+    }
+
+</script>
+
+</body>
+</html>

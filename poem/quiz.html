@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+    .quiz {
+        border: 1px solid black;
+        padding: 20px;
+    }
+
+    .myQ {
+        font-size: 24px;
+        font-weight: bold;
+        padding: 10px;
+    }
+
+    .btnAns {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+        display: block;
+        font-size: 16px;
+    }
+
+    .selAnswer {
+        background-color: cadetblue;
+        color: azure;
+    }
+
+    .endScore {
+        font-size: 20px;
+    }
+
+    .btnAns:hover {
+        background-color: cornflowerblue;
+        color: azure;
+    }
+
+</style>
+
+<body>
+<button id="start">Start</button>
+
+<div class="container">
+    <div class="row quiz">
+        <div id="output">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6">
+            <div id="btnPre" class="btn btn-primary pull-left">Previous</div>
+        </div>
+
+        <div class="col-sm-6">
+            <div id="btnNxt" class="btn btn-primary pull-right">Next</div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //var sourcefile = "https://api.myjson.com/bins/2rm5b";
+    var questions = [{
+        "question": "What Barks",
+        "answers": ["Cats", "Dogs", "Birds", "Elephants"],
+        "correct": 1
+    }, {
+        "question": "What Color is Grass",
+        "answers": ["Green", "Red", "Purple"],
+        "correct": 0
+    }, {"question": "The Sky is Blue ", "answers": ["True", "False"], "correct": 0}, {
+        "question": "How do you spell 5 ",
+        "answers": ["One", "Two", "Three", "Four", "Five"],
+        "correct": 4
+    }];
+
+    var answers = [], count = 0;
+
+    function start() {
+        var start_button = document.getElementById('start');
+        start_button.onclick = function () {
+            generate_question();
+        };
+    }
+
+    function generate_question() {
+        if (count < questions.length) {
+            var generated_q = document.createElement('h3');
+            var text_q = document.createTextNode(questions[count].question);
+            generated_q.appendChild(text_q);
+            question.appendChild(generated_q);
+
+            for (var i = 0; i < 3; i++) {
+                var generated_label = document.createElement('label');
+                var generated_input = document.createElement('input');
+                question.appendChild(generated_label);
+                generated_label.appendChild(generated_input);
+                generated_input.setAttribute("type", "radio");
+                generated_input.setAttribute("name", "choice");
+                generated_input.setAttribute("value", i);
+
+                var question_choices = document.createTextNode(questions[count].choices[i]);
+                generated_label.appendChild(question_choices);
+            }
+        }
+    }
+
+    var output = document.getElementById('output');
+    var bAnswer = document.getElementsByClassName('btnAns');
+    var myObj = '',
+            page = 0,
+            crtAnswer = 0;
+    var myQueRep = [];
+    loadQuestions();
+
+    //event listeners
+    btnPre.onclick = function () {
+        buildQuiz(page - 1)
+    };
+
+
+</script>
+
+</body>
+</html>
